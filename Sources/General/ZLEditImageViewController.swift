@@ -136,11 +136,12 @@ open class ZLEditImageViewController: UIViewController {
     
     open lazy var cancelBtn: ZLEnlargeButton = {
         let btn = ZLEnlargeButton(type: .custom)
-        btn.titleLabel?.font = ZLImageEditorLayout.bottomToolTitleFont
-        btn.setTitleColor(.white, for: .normal)
-        btn.setTitle(localLanguageTextValue(.cancel), for: .normal)
+        btn.setImage(.zl.getImage("close"), for: .normal)
+        btn.adjustsImageWhenHighlighted = false
+        //        btn.titleLabel?.font = ZLImageEditorLayout.bottomToolTitleFont
+        //        btn.setTitleColor(.white, for: .normal)
+        //        btn.setTitle(localLanguageTextValue(.cancel), for: .normal)
         btn.addTarget(self, action: #selector(cancelBtnClick), for: .touchUpInside)
-        btn.enlargeInset = 30
         return btn
     }()
     
@@ -158,8 +159,8 @@ open class ZLEditImageViewController: UIViewController {
     
     open lazy var undoBtn: ZLEnlargeButton = {
         let btn = ZLEnlargeButton(type: .custom)
-        btn.setImage(.zl.getImage("zl_undo_disable"), for: .disabled)
-        btn.setImage(.zl.getImage("zl_undo"), for: .normal)
+        btn.setImage(.zl.getImage("undo-circular-arrow_unselected"), for: .disabled)
+        btn.setImage(.zl.getImage("undo-circular-arrow"), for: .normal)
         btn.adjustsImageWhenHighlighted = false
         btn.isEnabled = !editorManager.actions.isEmpty
         btn.enlargeInset = 8
@@ -169,8 +170,8 @@ open class ZLEditImageViewController: UIViewController {
     
     open lazy var redoBtn: ZLEnlargeButton = {
         let btn = ZLEnlargeButton(type: .custom)
-        btn.setImage(.zl.getImage("zl_redo"), for: .normal)
-        btn.setImage(.zl.getImage("zl_redo_disable"), for: .disabled)
+        btn.setImage(.zl.getImage("redo-arrow-symbol"), for: .normal)
+        btn.setImage(.zl.getImage("redo-arrow-symbol_unselected"), for: .disabled)
         btn.adjustsImageWhenHighlighted = false
         btn.isEnabled = editorManager.actions.count != editorManager.redoActions.count
         btn.enlargeInset = 8
@@ -399,16 +400,18 @@ open class ZLEditImageViewController: UIViewController {
                 )
                 completion?(image.zl.clipImage(angle: angle, editRect: editRect, isCircle: ratio.isCircle) ?? image, m)
             }
-            vc.animateDismiss = animate
-            vc.modalPresentationStyle = .fullScreen
+//            vc.animateDismiss = animate
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
             parentVC?.present(vc, animated: animate, completion: nil)
         } else {
             let vc = ZLEditImageViewController(image: image, editModel: editModel)
             vc.editFinishBlock = { ei, editImageModel in
                 completion?(ei, editImageModel)
             }
-            vc.animateDismiss = animate
-            vc.modalPresentationStyle = .fullScreen
+//            vc.animateDismiss = animate
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
             parentVC?.present(vc, animated: animate, completion: nil)
         }
     }
@@ -510,7 +513,7 @@ open class ZLEditImageViewController: UIViewController {
         
         topShadowView.frame = CGRect(x: 0, y: 0, width: view.zl.width, height: 150)
         topShadowLayer.frame = topShadowView.bounds
-        cancelBtn.frame = CGRect(x: 30, y: insets.top + 10, width: 28, height: 28)
+        cancelBtn.frame = CGRect(x: 24, y: insets.top + 10, width: 16, height: 16)
         
         bottomShadowView.frame = CGRect(x: 0, y: view.zl.height - 150 - insets.bottom, width: view.zl.width, height: 150 + insets.bottom)
         bottomShadowLayer.frame = bottomShadowView.bounds
@@ -518,11 +521,11 @@ open class ZLEditImageViewController: UIViewController {
         let cancelBtnW = localLanguageTextValue(.cancel)
             .zl.boundingRect(
                 font: ZLImageEditorLayout.bottomToolTitleFont,
-                limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 28)
+                limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 24)
             ).width
-        cancelBtn.frame = CGRect(x: 20, y: 60, width: cancelBtnW, height: 30)
-        redoBtn.frame = CGRect(x: view.zl.width - 15 - 30, y: 60, width: 30, height: 30)
-        undoBtn.frame = CGRect(x: redoBtn.zl.left - 15 - 30, y: 60, width: 30, height: 30)
+        cancelBtn.frame = CGRect(x: 24, y: 48, width: 14, height: 14)
+        redoBtn.frame = CGRect(x: view.zl.width - 15 - 20, y: 45, width: 18, height: 18)
+        undoBtn.frame = CGRect(x: redoBtn.zl.left - 15 - 20, y: 45, width: 18, height: 18)
         
         eraserBtn.frame = CGRect(x: 20, y: 30 + (drawColViewH - 36) / 2, width: 36, height: 36)
         eraserBtnBgBlurView.frame = eraserBtn.frame
@@ -561,7 +564,7 @@ open class ZLEditImageViewController: UIViewController {
         let toolY: CGFloat = 95
         
         let doneBtnH = ZLImageEditorLayout.bottomToolBtnH
-        let doneBtnW = localLanguageTextValue(.editFinish).zl.boundingRect(font: ZLImageEditorLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: doneBtnH)).width + 20
+        let doneBtnW = localLanguageTextValue(.editFinish).zl.boundingRect(font: ZLImageEditorLayout.bottomToolTitleFont, limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: doneBtnH)).width + 40
         doneBtn.frame = CGRect(x: view.zl.width - 20 - doneBtnW, y: toolY - 2, width: doneBtnW, height: doneBtnH)
         
         editToolCollectionView.frame = CGRect(x: 20, y: toolY, width: view.zl.width - 20 - 20 - doneBtnW - 20, height: 30)
@@ -965,7 +968,7 @@ open class ZLEditImageViewController: UIViewController {
         if isSelected {
             selectedTool = .mosaic
         } else {
-            selectedTool = nil
+            selectedTool = .mosaic
         }
         
         generateNewMosaicLayerIfAdjust()
@@ -1271,7 +1274,7 @@ open class ZLEditImageViewController: UIViewController {
     }
     
     func adjustValueChanged(_ value: Float) {
-        guard let selectedAdjustTool else {
+        guard let selectedAdjustTool = selectedAdjustTool else {
             return
         }
         
@@ -1306,7 +1309,7 @@ open class ZLEditImageViewController: UIViewController {
             saturation: currentAdjustStatus.saturation
         )
         
-        guard let resultImage else { return }
+        guard let resultImage = resultImage else { return }
         
         editImage = resultImage
         imageView.image = editImage
@@ -1449,7 +1452,7 @@ open class ZLEditImageViewController: UIViewController {
     }
     
     private func removeSticker(id: String?) {
-        guard let id else { return }
+        guard let id = id else { return }
         
         for sticker in stickersContainer.subviews.reversed() {
             guard let stickerID = (sticker as? ZLBaseStickerView)?.id,
@@ -2027,7 +2030,7 @@ extension ZLEditImageViewController: ZLEditorManagerDelegate {
     }
     
     private func undoSticker(_ oldState: ZLBaseStickertState?, _ newState: ZLBaseStickertState?) {
-        guard let oldState else {
+        guard let oldState = oldState else {
             removeSticker(id: newState?.id)
             return
         }
@@ -2039,7 +2042,7 @@ extension ZLEditImageViewController: ZLEditorManagerDelegate {
     }
     
     private func redoSticker(_ oldState: ZLBaseStickertState?, _ newState: ZLBaseStickertState?) {
-        guard let newState else {
+        guard let newState = newState else {
             removeSticker(id: oldState?.id)
             return
         }
@@ -2051,12 +2054,12 @@ extension ZLEditImageViewController: ZLEditorManagerDelegate {
     }
     
     private func undoOrRedoFilter(_ filter: ZLFilter?) {
-        guard let filter else { return }
+        guard let filter = filter else { return }
         changeFilter(filter)
         
         let filters = ZLImageEditorConfiguration.default().filters
         
-        guard let filterCollectionView,
+        guard let filterCollectionView = filterCollectionView,
               let index = filters.firstIndex(where: { $0.name == filter.name }) else {
             return
         }
@@ -2082,11 +2085,11 @@ extension ZLEditImageViewController: ZLEditorManagerDelegate {
         preAdjustStatus = status
         adjustStatusChanged()
         
-        guard let adjustTool else { return }
+        guard let adjustTool = adjustTool else { return }
         
         changeAdjustTool(adjustTool)
         
-        guard let adjustCollectionView,
+        guard let adjustCollectionView = adjustCollectionView,
               let index = adjustTools.firstIndex(where: { $0 == adjustTool }) else {
             return
         }

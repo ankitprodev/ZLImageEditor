@@ -27,11 +27,11 @@
 import UIKit
 
 struct ZLImageEditorLayout {
-    static let bottomToolBtnH: CGFloat = 34
+    static let bottomToolBtnH: CGFloat = 40
     
     static let bottomToolTitleFont = UIFont.systemFont(ofSize: 17)
     
-    static let bottomToolBtnCornerRadius: CGFloat = 5
+    static let bottomToolBtnCornerRadius: CGFloat = 20
 }
 
 func deviceIsiPhone() -> Bool {

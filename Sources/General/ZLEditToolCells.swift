@@ -43,8 +43,8 @@ class ZLEditToolCell: UICollectionViewCell {
                 icon.image = .zl.getImage("zl_textSticker")
                 icon.highlightedImage = .zl.getImage("zl_textSticker")
             case .mosaic:
-                icon.image = .zl.getImage("zl_mosaic")
-                icon.highlightedImage = .zl.getImage("zl_mosaic_selected")
+                icon.image = .zl.getImage("eraser_unselected")
+                icon.highlightedImage = .zl.getImage("eraser_selected")
             case .filter:
                 icon.image = .zl.getImage("zl_filter")
                 icon.highlightedImage = .zl.getImage("zl_filter_selected")

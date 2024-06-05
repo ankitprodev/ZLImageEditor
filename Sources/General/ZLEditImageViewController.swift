@@ -136,7 +136,7 @@ open class ZLEditImageViewController: UIViewController {
     
     open lazy var cancelBtn: ZLEnlargeButton = {
         let btn = ZLEnlargeButton(type: .custom)
-        btn.setImage(.zl.getImage("close"), for: .normal)
+        btn.setImage(.zl.getImage("ic_close_white"), for: .normal)
         btn.adjustsImageWhenHighlighted = false
         //        btn.titleLabel?.font = ZLImageEditorLayout.bottomToolTitleFont
         //        btn.setTitleColor(.white, for: .normal)
@@ -513,7 +513,7 @@ open class ZLEditImageViewController: UIViewController {
         
         topShadowView.frame = CGRect(x: 0, y: 0, width: view.zl.width, height: 150)
         topShadowLayer.frame = topShadowView.bounds
-        cancelBtn.frame = CGRect(x: 24, y: insets.top + 45, width: 14, height: 14)
+        cancelBtn.frame = CGRect(x: 24, y: insets.top + 16, width: 20, height: 20)
         
         bottomShadowView.frame = CGRect(x: 0, y: view.zl.height - 150 - insets.bottom, width: view.zl.width, height: 150 + insets.bottom)
         bottomShadowLayer.frame = bottomShadowView.bounds
@@ -523,9 +523,9 @@ open class ZLEditImageViewController: UIViewController {
                 font: ZLImageEditorLayout.bottomToolTitleFont,
                 limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 24)
             ).width
-        cancelBtn.frame = CGRect(x: 24, y: insets.top + 45, width: 14, height: 14)
-        redoBtn.frame = CGRect(x: view.zl.width - 15 - 20, y: insets.top + 42, width: 18, height: 18)
-        undoBtn.frame = CGRect(x: redoBtn.zl.left - 15 - 20, y: insets.top + 42, width: 18, height: 18)
+        cancelBtn.frame = CGRect(x: 24, y: insets.top + 16, width: 20, height: 20)
+        redoBtn.frame = CGRect(x: view.zl.width - 15 - 20, y: insets.top + 16, width: 18, height: 18)
+        undoBtn.frame = CGRect(x: redoBtn.zl.left - 15 - 20, y: insets.top + 16, width: 18, height: 18)
         
         eraserBtn.frame = CGRect(x: 20, y: 30 + (drawColViewH - 36) / 2, width: 36, height: 36)
         eraserBtnBgBlurView.frame = eraserBtn.frame

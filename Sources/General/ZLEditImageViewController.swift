@@ -513,7 +513,6 @@ open class ZLEditImageViewController: UIViewController {
         
         topShadowView.frame = CGRect(x: 0, y: 0, width: view.zl.width, height: 150)
         topShadowLayer.frame = topShadowView.bounds
-        cancelBtn.frame = CGRect(x: 24, y: insets.top + 16, width: 20, height: 20)
         
         bottomShadowView.frame = CGRect(x: 0, y: view.zl.height - 150 - insets.bottom, width: view.zl.width, height: 150 + insets.bottom)
         bottomShadowLayer.frame = bottomShadowView.bounds
@@ -523,9 +522,9 @@ open class ZLEditImageViewController: UIViewController {
                 font: ZLImageEditorLayout.bottomToolTitleFont,
                 limitSize: CGSize(width: CGFloat.greatestFiniteMagnitude, height: 24)
             ).width
-        cancelBtn.frame = CGRect(x: 24, y: insets.top + 16, width: 20, height: 20)
-        redoBtn.frame = CGRect(x: view.zl.width - 15 - 20, y: insets.top + 16, width: 18, height: 18)
-        undoBtn.frame = CGRect(x: redoBtn.zl.left - 15 - 20, y: insets.top + 16, width: 18, height: 18)
+        cancelBtn.frame = CGRect(x: 24, y: insets.top + 16, width: 30, height: 30)
+        redoBtn.frame = CGRect(x: view.zl.width - 15 - 20, y: insets.top + 16, width: 30, height: 30)
+        undoBtn.frame = CGRect(x: redoBtn.zl.left - 15 - 20, y: insets.top + 16, width: 30, height: 30)
         
         eraserBtn.frame = CGRect(x: 20, y: 30 + (drawColViewH - 36) / 2, width: 36, height: 36)
         eraserBtnBgBlurView.frame = eraserBtn.frame
